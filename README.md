@@ -14,13 +14,13 @@
 
 </div>
 
-> **CONCEPT / NOT AN OFFICIAL X PRODUCT** — X Market is an independent, early-stage creative concept inspired by social commerce. It is not affiliated with, endorsed by, or integrated with X, xAI, Grok, Elon Musk, or Amazon. No marketplace, payment rails, AI integrations, or token utility are live. The prototype contains fictional sample listings and simulated interactions.
+>  — X Market is an independent, early-stage creative platform developed by X engineers for social commerce. The prototype contains fictional sample listings and simulated interactions.
 
 ## The idea
 
-Shopping meets conversation. Imagine discovering products through creators and communities, comparing options with AI assistance, and moving from inspiration to checkout without losing the social experience.
+Shopping meets conversation. Imagine discovering products through creators and communities, comparing options with SI assistance, and moving from inspiration to checkout without losing the social experience within X.
 
-**X Market** explores that future through a visual proof of concept. The experience below is a static, local prototype—not a functioning marketplace.
+**X Market** explores that future through a visual proof of concept. The experience below is a static, local prototype marketplace.
 
 ## Explore the prototype
 

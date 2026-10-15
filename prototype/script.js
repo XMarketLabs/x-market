@@ -1,0 +1,26 @@
+'use strict';
+// All data and interactions are local, fictional, and demo-only.
+const catalog = [
+ {id:1,name:'Orbit Wireless',category:'Tech',price:89,emoji:'🎧',badge:'COMMUNITY PICK',description:'Concept wireless headphones for everyday listening.',gradient:'linear-gradient(135deg,#244563,#111c2c)'},
+ {id:2,name:'Future Form',category:'Style',price:64,emoji:'👟',badge:'TRENDING',description:'A minimal sneaker imagined for the always-moving.',gradient:'linear-gradient(135deg,#534c67,#1b1826)'},
+ {id:3,name:'Pulse Desk Light',category:'Lifestyle',price:48,emoji:'💡',badge:'NEW FIND',description:'Ambient lighting concept for a better workspace.',gradient:'linear-gradient(135deg,#345953,#132522)'},
+ {id:4,name:'Everyday Carry',category:'Style',price:42,emoji:'🎒',badge:'CURATED',description:'A clean, functional bag for your daily essentials.',gradient:'linear-gradient(135deg,#654b3c,#251b17)'},
+ {id:5,name:'Signal Watch',category:'Tech',price:95,emoji:'⌚',badge:'DISCOVER',description:'A wearable design exploration for connected life.',gradient:'linear-gradient(135deg,#394d68,#111c2a)'},
+ {id:6,name:'Cloud Cup',category:'Lifestyle',price:28,emoji:'☕',badge:'COMMUNITY PICK',description:'A cozy ceramic cup concept for slower mornings.',gradient:'linear-gradient(135deg,#5e566e,#211c2d)'},
+ {id:7,name:'Arc Camera',category:'Tech',price:99,emoji:'📷',badge:'CREATOR FAVORITE',description:'A pocket-sized camera concept for creative moments.',gradient:'linear-gradient(135deg,#4c5b66,#1a252d)'},
+ {id:8,name:'Metro Shades',category:'Style',price:35,emoji:'🕶️',badge:'NEW FIND',description:'Understated sunglasses inspired by city life.',gradient:'linear-gradient(135deg,#605b4d,#211f1a)'}
+];
+let filter='All';let query='';const bag=[];
+const $=id=>document.getElementById(id);
+function filtered(){return catalog.filter(p=>(filter==='All'||p.category===filter)&&(`${p.name} ${p.category} ${p.description}`.toLowerCase().includes(query)))}
+function render(){const items=filtered();$('products').innerHTML=items.length?items.map(p=>`<article class="product"><div class="product-art" style="background:${p.gradient}"><small>${p.badge}</small><span aria-hidden="true">${p.emoji}</span></div><div class="product-info"><span class="category">${p.category} / DEMO ITEM</span><h3>${p.name}</h3><p>${p.description}</p><div class="product-bottom"><strong>$${p.price}</strong><button type="button" data-view="${p.id}">View concept ↗</button></div></div></article>`).join(''):'<p>No concept products match that search.</p>'}
+function showProduct(id){const p=catalog.find(p=>p.id===id);if(!p)return;$('dialogContent').innerHTML=`<div class="modal-icon" style="background:${p.gradient}">${p.emoji}</div><span class="kicker">${p.category.toUpperCase()} / FICTIONAL LISTING</span><h2>${p.name}</h2><p>${p.description}</p><h3>$${p.price} <small>(illustrative price)</small></h3><p>Design concept only. Not a real product for sale.</p><button class="primary" id="addBag" type="button">Add to demo bag +</button>`;$('productDialog').showModal();$('addBag').addEventListener('click',()=>{bag.push(p);$('cartCount').textContent=bag.length;$('productDialog').close();showBag()})}
+function showBag(){$('cartItems').innerHTML=bag.length?bag.map((p,i)=>`<div><span>${p.emoji} ${p.name} — $${p.price}</span><button type="button" data-remove="${i}">Remove</button></div>`).join('')+`<p><strong>Illustrative total: $${bag.reduce((s,p)=>s+p.price,0)}</strong></p>`:'<p>Your demo bag is empty.</p>';$('cartDialog').showModal()}
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{filter=btn.dataset.filter;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===btn));render()}));
+$('search').addEventListener('input',e=>{query=e.target.value.toLowerCase().trim();render()});
+$('products').addEventListener('click',e=>{const b=e.target.closest('[data-view]');if(b)showProduct(Number(b.dataset.view))});
+$('cartBtn').addEventListener('click',showBag);$('closeCart').addEventListener('click',()=>$('cartDialog').close());$('closeDialog').addEventListener('click',()=>$('productDialog').close());
+$('clearCart').addEventListener('click',()=>{bag.length=0;$('cartCount').textContent=0;$('cartDialog').close()});
+$('cartItems').addEventListener('click',e=>{const b=e.target.closest('[data-remove]');if(!b)return;bag.splice(Number(b.dataset.remove),1);$('cartCount').textContent=bag.length;$('cartDialog').close();showBag()});
+const replies={'Find tech under $100':'In this fictional demo, Orbit Wireless ($89), Signal Watch ($95), and Arc Camera ($99) match your request. Browse the Tech filter to explore them.','Show me lifestyle picks':'Try Pulse Desk Light ($48) or Cloud Cup ($28). These are illustrative listings, not products for sale.','What is X Market?':'X Market is an independent social-commerce concept. This interface is a prototype, not a live marketplace or official X service.'};
+document.querySelectorAll('[data-prompt]').forEach(btn=>btn.addEventListener('click',()=>{const prompt=btn.dataset.prompt;const wrap=$('chatMessages');const user=document.createElement('div');user.className='bubble user';user.textContent=prompt;const bot=document.createElement('div');bot.className='bubble bot';bot.textContent=replies[prompt];wrap.append(user,bot);wrap.scrollTop=wrap.scrollHeight}));render();
